@@ -3,7 +3,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -21,7 +21,7 @@ export default function RootLayout() {
         return null
     }
     return (
-        <>
+        <GestureHandlerRootView>
         <StatusBar style="auto"/>
         <Stack screenOptions={{headerShown: false, headerTitleAlign: "center"}}>
             <Stack.Screen name="index"/>
@@ -29,6 +29,6 @@ export default function RootLayout() {
             <Stack.Screen name="(search)"/>
         </Stack>
 
-        </>
+        </GestureHandlerRootView>
     )
 }

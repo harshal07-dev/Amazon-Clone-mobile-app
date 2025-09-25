@@ -10,6 +10,7 @@ import { AmazonEmberBold } from "@/utils/Constant";
 import { router, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
+
 export default function Home() {
   const navigation = useNavigation();
   const session = true;
