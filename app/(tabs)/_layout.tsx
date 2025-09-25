@@ -1,35 +1,73 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import Header from "@/components/Shared/header/Header";
+import { AmazonEmberBold } from "@/utils/Constant";
+import MCIcon from "@expo/vector-icons/MaterialCommunityIcons";
+import { Tabs } from "expo-router";
+import { Text, View } from "react-native";
+interface Tab {
+  name: string;
+  icon: "home-outline" | "account-outline" | "cart-check";
+}
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const tabs: Tab[] = [
+    {
+      name: "index",
+      icon: "home-outline",
+    },
+    {
+      name: "profile",
+      icon: "account-outline",
+    },
+    {
+      name: "cart",
+      icon: "cart-check",
+    },
+  ];
 
+  const cartItems = "Cart Items"
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
+    <Tabs>
+      {tabs.map((tab) => (
+        <Tabs.Screen
+          key={tab.name}
+          name={tab.name}
+          options={{
+            tabBarStyle: {
+              borderTopWidth: 1,
+              borderTopColor: "lightgray",
+            },
+            tabBarLabel: () => null,
+            header: (props) => <Header {...props} />,
+            tabBarIcon: ({ focused }) => (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "space-between",
+                  alignItems: 'center'
+                }}
+              >
+                <View style={{ flexDirection: "row", width: 100 , height: 4, borderRadius: 20, backgroundColor: focused ? "#238db0" : "transparent"}}/>
+                <MCIcon name={tab.icon} size={30} color={focused ? "#238db0" : "black"}/>
+                {tab.name === 'cart' && (
+                    <Text style={{
+                        paddingHorizontal: 4,
+                        borderRadius: 10,
+                        position: "absolute",
+                        top: 4,
+                        right: 20,
+                        backgroundColor: cartItems.length === 0 ? "transparent" : "#de1b1bff",
+                        fontFamily: AmazonEmberBold,
+                        fontSize: 12,
+                        color: cartItems.length === 0 ? "transparent" : "white"
+                    }}>
+                        {cartItems.length}
+                    </Text>
+                )}
+              </View>
+            ),
+          }}
+        ></Tabs.Screen>
+      ))}
     </Tabs>
   );
 }
