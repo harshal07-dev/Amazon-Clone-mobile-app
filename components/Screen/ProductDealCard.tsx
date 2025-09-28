@@ -30,25 +30,34 @@ export default function ProductDealCard({ product, onPress }: Props) {
         >
           <Image
             source={{ uri: product.imageUrl }}
-            style={{ objectFit: "contain" , 
-                width: "100%",
-                height: "100%"
-            }}
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
           />
         </View>
-        <View style={{flexDirection: "row", gap: 10,
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
             justifyContent: "space-between",
-            alignItems: "center"
-        }}><Text style={{
-            borderRadius: 4,
-            paddingHorizontal: 6,
-            paddingVertical: 4,
-            backgroundColor: "red",
-            color: "white",
-            fontWeight: "bold",
-            fontSize: 11
-        }}>{offPercentage(product.currentPrice, product.previousPrice)} % off</Text>
-        <Text style={{fontSize: 12, color: "red", fontFamily: AmazonEmber}}>Limited Deal</Text></View>
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              borderRadius: 4,
+              paddingHorizontal: 6,
+              paddingVertical: 4,
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: 11,
+            }}
+          >
+            {offPercentage(product.currentPrice, product.previousPrice)} % off
+          </Text>
+          <Text style={{ fontSize: 12, color: "red", fontFamily: AmazonEmber }}>
+            Limited Deal
+          </Text>
+        </View>
       </View>
     </Pressable>
   );
