@@ -61,6 +61,7 @@ export default function HeaderSearch() {
           shadowOpacity: 0.4,
           shadowRadius: 4,
           elevation: 3,
+          paddingHorizontal: 6,
         }}
       >
         <Icon name="search" color={"black"} size={24} />
@@ -78,7 +79,7 @@ export default function HeaderSearch() {
             fontWeight: "800",
             fontSize: 20,
             borderWidth: 0,
-            paddingHorizontal: 10,
+            paddingHorizontal: 11,
             paddingVertical: 8,
             borderRadius: 8,
           }}

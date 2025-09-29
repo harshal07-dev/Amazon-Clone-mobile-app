@@ -55,7 +55,7 @@ export default function TabLayout() {
                         position: "absolute",
                         top: 4,
                         right: 20,
-                        backgroundColor: cartItems.length === 0 ? "transparent" : "#de1b1bff",
+                        backgroundColor: `cartItems.length === 0 ? "transparent" : "#de1b1bff"`,
                         fontFamily: AmazonEmberBold,
                         fontSize: 12,
                         color: cartItems.length === 0 ? "transparent" : "white"

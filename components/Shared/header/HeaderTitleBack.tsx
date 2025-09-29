@@ -3,7 +3,7 @@ import { Pressable, Text } from "react-native";
 
 export  function HeaderTitle() {
     return (
-        <Text style={{fontSize: 18, fontFamily: AmazonEmberBold}}>Amazon.in</Text>
+        <Text style={{fontSize: 18, fontFamily: AmazonEmberBold, fontWeight: 'bold'}}>Amazon.in</Text>
     )
 }
 
