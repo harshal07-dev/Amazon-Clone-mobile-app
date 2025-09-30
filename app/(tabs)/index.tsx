@@ -74,7 +74,7 @@ export default function Home() {
             ? "Deals for you"
             : "Sign in for your best experience"}
         </Text>
-        {session ? (
+        {!session ? (
           <View
             style={{
               justifyContent: "space-between",

@@ -27,6 +27,7 @@ export default function RootLayout() {
             <Stack.Screen name="index"/>
             <Stack.Screen name="(tabs)"/>
             <Stack.Screen name="(search)"/>
+            <Stack.Screen name="(seller_zone)"/>
         </Stack>
 
         </GestureHandlerRootView>
