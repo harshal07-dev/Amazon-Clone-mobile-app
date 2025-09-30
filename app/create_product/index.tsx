@@ -31,7 +31,7 @@ export default function CreateProduct() {
   const [loading, setLoading] = useState(false);
   const pickMedia = () => {};
   const pickAndUploadGLB = () => {};
-  const CreateProduct = () => {
+  const createProduct = () => {
     // store data to the database
     router.back();
   };
@@ -319,7 +319,7 @@ export default function CreateProduct() {
           </TouchableOpacity>
         )}
 
-        <DefaultButton style={{ width: "100%" }} onPress={CreateProduct} disabled={loading}>
+        <DefaultButton style={{ width: "100%" }} onPress={createProduct} disabled={loading}>
           {loading ? "Please wait..." : "Create Product"}
         </DefaultButton>
       </View>

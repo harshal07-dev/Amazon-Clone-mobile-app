@@ -10,7 +10,7 @@ import { Image, Pressable, ScrollView, Text, View } from "react-native";
 
 export default function Profile() {
   const navigation = useNavigation();
-  const session = true;
+  const session = false;
   const isSeller = true;
   const unDeliveredCount = 0;
   const bottomSheetRef = useRef<BottomSheet>(null);
