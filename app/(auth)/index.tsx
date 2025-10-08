@@ -1,9 +1,9 @@
 import DefaultButton from "@/components/Shared/DefaultButton";
-import { AmazonEmber } from "@/utils/Constant";
+import { AmazonEmber, AmazonEmberLight } from "@/utils/Constant";
 import Checkbox from "expo-checkbox";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Dimensions, Pressable, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 enum Step {
@@ -11,7 +11,7 @@ enum Step {
   "PASSWORD" = 2,
 }
 export default function SignIn() {
-  const [step, setStep] = useState(Step.PASSWORD);
+  const [step, setStep] = useState(Step.EMAIL);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -127,6 +127,31 @@ export default function SignIn() {
             <Text style={{color: "#ffb703"}}>Sign Up</Text>
             </Text>
             </Pressable>
+            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+                <Text style={{textDecorationLine: "underline", color: "#146eb4", fontFamily: AmazonEmber}}>Conditions</Text>
+            </View>
+            <View style={{
+                marginTop: 10, height: 3, backgroundColor: "lightgray",
+                width: Dimensions.get("window").width 
+            }}/>
+            <View style={{gap:20}}>
+            <View style={{flexDirection: "row", gap: 20}}>{
+            ["Conditions of use", "Privacy Notice", "Help"].map((link)=> (
+                <Text key={link} style={{
+                    fontSize: 16,
+                    textDecorationLine: "underline",
+                    color: "#146eb4",
+                    fontFamily: AmazonEmberLight
+                }}>
+                {link}
+                </Text>
+            ) )
+            }</View>
+            <Text style={{color: "gray", fontSize: 14, fontFamily: AmazonEmberLight, textAlign: "center"}}>
+                © 1996-2025 Amazon.in, Inc
+            </Text>
+            </View>
+            
     </View>
   );
 }
