@@ -5,15 +5,17 @@ import DefaultButton from "@/components/Shared/DefaultButton";
 import DeliveryLocation from "@/components/Shared/DeliveryLocation";
 import { HeaderTabsProps } from "@/components/Shared/header/HeaderTabs";
 import { deals } from "@/dummy_data/product_deal";
+import { RootState } from "@/store";
 import { Product } from "@/types";
 import { AmazonEmberBold } from "@/utils/Constant";
 import { router, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function Home() {
   const navigation = useNavigation();
-  const session = true;
+  const session = useSelector((state: RootState) => state.auth.session);
 
   const tabs: HeaderTabsProps["tabs"] = [
     {
@@ -74,7 +76,7 @@ export default function Home() {
             ? "Deals for you"
             : "Sign in for your best experience"}
         </Text>
-        {!session ? (
+        {session ? (
           <View
             style={{
               justifyContent: "space-between",

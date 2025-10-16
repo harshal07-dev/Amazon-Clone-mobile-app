@@ -7,6 +7,8 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import CheckBox from "expo-checkbox";
+import * as DocumentPicker from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -29,8 +31,32 @@ export default function CreateProduct() {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [fileUrlGLB, setFileUrlGLB] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const pickMedia = () => {};
-  const pickAndUploadGLB = () => {};
+
+  const pickMedia = async () => {
+    const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if(status !== "granted") {
+      alert("Permission to access media library is required!")
+    } 
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1,1],
+      quality: 0.5,
+    });
+    if(!result.canceled) {
+      setImageUri(result.assets[0].uri)
+    }
+  };
+  const pickAndUploadGLB = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "*/*",
+      copyToCacheDirectory: true,
+    })
+    if(!result.canceled) {
+      setFileUrlGLB(result.assets[0].uri)
+    }
+  };
+
   const createProduct = () => {
     // store data to the database
     router.back();
@@ -236,7 +262,7 @@ export default function CreateProduct() {
             </Pressable>
           </View>
         )}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={pickMedia}>
           <Text
             style={{
               alignSelf: "flex-start",
