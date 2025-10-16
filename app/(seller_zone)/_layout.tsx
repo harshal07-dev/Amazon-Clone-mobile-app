@@ -6,7 +6,7 @@ import { Pressable, Text, View } from "react-native";
 
 interface Tab {
     name: string;
-    icon: "add-to-list" | "archive";
+    icon: "add-to-list" | "archive" | "list";
 }
 export default function TabLayout() {
     const onGoBack = () => router.back();
@@ -19,6 +19,10 @@ export default function TabLayout() {
         {
             name: "product_ordered",
             icon: "archive"
+        },
+        {
+            name: "products",
+            icon: "list"
         }
     ]
     return (

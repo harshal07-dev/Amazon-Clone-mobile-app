@@ -1,10 +1,14 @@
 import DefaultButton from "@/components/Shared/DefaultButton";
+import { RootState } from "@/store";
+import { supabase } from "@/supabase";
 import { AmazonEmber } from "@/utils/Constant";
+import { glbUpload } from "@/utils/glbUpload";
+import { imageUpload } from "@/utils/ImageUpload";
 import {
-  AntDesign,
-  Feather,
-  MaterialCommunityIcons,
-  MaterialIcons,
+    AntDesign,
+    Feather,
+    MaterialCommunityIcons,
+    MaterialIcons,
 } from "@expo/vector-icons";
 import CheckBox from "expo-checkbox";
 import * as DocumentPicker from "expo-document-picker";
@@ -12,15 +16,17 @@ import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-  Image,
-  Pressable,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Alert, Image,
+    Pressable,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from "react-native";
+import { useSelector } from "react-redux";
 export default function CreateProduct() {
+  const session = useSelector((state: RootState) => state.auth.session)
   const [name, setName] = useState<string>("");
   const [amountInStock, setAmountInStock] = useState<string>("");
   const [currentPrice, setCurrentPrice] = useState<string>("");
@@ -57,9 +63,55 @@ export default function CreateProduct() {
     }
   };
 
-  const createProduct = () => {
-    // store data to the database
-    router.back();
+  const createProduct = async () => {
+    if (!session?.user?.id) {
+      Alert.alert("Not signed in", "Please sign in to create a product.");
+      return;
+    }
+    if (!name.trim()) {
+      Alert.alert("Missing name", "Please enter a product name.");
+      return;
+    }
+    if (!imageUri) {
+      Alert.alert("Missing image", "Please add a product image.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const publicImageUrl = await imageUpload(imageUri);
+      const glbUrl = await glbUpload(fileUrlGLB);
+
+      if (!publicImageUrl) {
+        throw new Error("Image URL not available after upload");
+      }
+
+      const insertPayload = {
+        name: name.trim(),
+        amountInStock: Number(amountInStock || 0),
+        currentPrice: Number(currentPrice || 0),
+        previousPrice: Number(previousPrice || 0),
+        deliveryPrice: Number(deliveryPrice || 0),
+        deliveryInDays: Number(deliveryInDays || 0),
+        isAmazonChoice,
+        imageUrl: publicImageUrl,
+        model3DUrl: glbUrl ?? null,
+        user_id: session.user?.id,
+      };
+
+      const { error } = await supabase
+        .from("product")
+        .insert([insertPayload]);
+
+      if (error) throw error;
+
+      router.back();
+    } catch (e: any) {
+      console.error("Create product failed:", e?.message || e);
+      Alert.alert("Create failed", e?.message || "Something went wrong creating the product.");
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <ScrollView
