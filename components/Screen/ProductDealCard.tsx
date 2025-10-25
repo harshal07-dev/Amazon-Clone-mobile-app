@@ -18,6 +18,7 @@ export default function ProductDealCard({ product, onPress }: Props) {
           marginBottom: 5,
         }}
       >
+        <Text style={{ fontSize: 17, fontFamily: AmazonEmber , marginBottom: 6}}>{product.name}</Text>
         <View
           style={{
             flexDirection: "row",
