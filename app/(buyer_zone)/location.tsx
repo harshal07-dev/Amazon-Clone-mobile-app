@@ -1,12 +1,41 @@
+import { RootState } from "@/store";
+import { supabase } from "@/supabase";
 import { AmazonEmber } from "@/utils/Constant";
-import AntDesign from '@expo/vector-icons/AntDesign';
-import React, { useState } from "react";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import React, { useEffect, useState } from "react";
 import { Text, TextInput, View } from "react-native";
+import { useSelector } from "react-redux";
 export default function location() {
+  const session = useSelector((state: RootState) => state.auth.session);
   const [name, setName] = useState<string>("");
-  const [location, setLocation] = useState<string>(""); 
+  const [location, setLocation] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const handleNameChange = (text: string) => setName(text);
+  const fetchText = async () => {
+    const [data, error] = await supabase
+      .from("profiles")
+      .select("location, full_name")
+      .eq("id", session?.user.id)
+      .single();
+      if(data) {
+        setLocation(data.location) 
+        setName(data.full_name)
+      }
+      if(error) {
+        console.log("Fetch Error", error)
+      }
+  };
+  useEffect(() => {
+    fetchText()
+  },[])
+  // const handleNameChange = (text: string) => setName(text);
+  const handleNameChange = async (value: string) => {
+    setLoading (true);
+    setName(value)
+    const {error} = await supabase.from("profiles").upsert({
+      id: session?.user.id,
+      full_name: value
+    })
+  }
   const handleLocationChange = (text: string) => setLocation(text);
   return (
     <View
@@ -44,8 +73,10 @@ export default function location() {
           style={{ position: "absolute", right: 10, top: 12 }}
         />
       </View>
-      
-      <Text style={{fontSize: 20, fontFamily: AmazonEmber}}>Give delivery address</Text>
+
+      <Text style={{ fontSize: 20, fontFamily: AmazonEmber }}>
+        Give delivery address
+      </Text>
       <View style={{ position: "relative" }}>
         <TextInput
           value={location}

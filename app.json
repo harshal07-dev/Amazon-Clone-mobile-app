@@ -23,7 +23,12 @@
         "monochromeImage": "./assets/icons/ios-tinted.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.Amazonclone"
     },
     "web": {
       "output": "static",
@@ -43,19 +48,20 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-        ], 
-        [
-          "expo-image-picker",
-          {
-            "photosPermission": "The app access your photos to let you share them with your friends."
-          }
-        ], [
-          "expo-document-picker",
-          {
-            "iCloudContainerEnvironment": "Production"
-          }
-        ]
       ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app access your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
